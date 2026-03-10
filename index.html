@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EuroBloom Tours | Explore Europe</title>
+  <style>
+    :root {
+      --bg: #fffaf5;
+      --surface: rgba(255,255,255,0.82);
+      --surface-strong: #ffffff;
+      --text: #4d3d3a;
+      --muted: #7a6660;
+      --primary: #f28c38;
+      --secondary: #ffb84d;
+      --accent: #f47ba5;
+      --accent-soft: #ffd6e5;
+      --yellow-soft: #fff2b8;
+      --shadow: 0 20px 45px rgba(232, 138, 87, 0.16);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max-width: 1200px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 198, 204, 0.35), transparent 20%),
+        radial-gradient(circle at top right, rgba(255, 233, 148, 0.4), transparent 18%),
+        linear-gradient(180deg, #fff9f4 0%, #fffefc 100%);
+      line-height: 1.6;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button, input, select, textarea {
+      font: inherit;
+      border: none;
+      outline: none;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(242, 140, 56, 0.18);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      font-size: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      font-size: 1.25rem;
+      line-height: 1.1;
+      color: #9a4b5c;
+    }
+
+    .brand p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sidebar-nav a {
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-weight: 700;
+      color: #6a5651;
+      transition: 0.25s ease;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: linear-gradient(90deg, rgba(255, 214, 195, 0.9), rgba(255, 239, 184, 0.9), rgba(255, 214, 229, 0.85));
+      color: #9a4b5c;
+      transform: translateX(4px);
+    }
+
+    .sidebar-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #fff5cc, #ffe2d3, #ffd8e7);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar-card h3 {
+      margin-bottom: 8px;
+      color: #8f4157;
+      font-size: 1rem;
+    }
+
+    .sidebar-card p {
+      color: #6d5b55;
+      font-size: 0.93rem;
+      margin-bottom: 14px;
+    }
+
+    .sidebar-card .mini-btn {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      color: #8f4157;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .main-content {
+      padding: 24px;
+    }
+
+    .topbar {
+      max-width: var(--max-width);
+      margin: 0 auto 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(242,140,56,0.16);
+      padding: 16px 20px;
+      border-radius: 22px;
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn,
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      color: white;
+      box-shadow: 0 12px 24px rgba(244, 123, 165, 0.25);
+    }
+
+    .ghost-btn {
+      background: white;
+      color: #8c4960;
+      border: 1px solid rgba(244, 123, 165, 0.18);
+    }
+
+    .primary-btn:hover,
+    .ghost-btn:hover { transform: translateY(-2px); }
+
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-panel,
+    .hero-visual {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      background: linear-gradient(135deg, #fff0b8, #ffd8c8 55%, #ffd5e6);
+      padding: 44px;
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: #a25b1a;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero-panel h2 {
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      line-height: 1.04;
+      color: #8e425a;
+      margin-bottom: 16px;
+      max-width: 11ch;
+    }
+
+    .hero-panel p {
+      max-width: 58ch;
+      color: #664f49;
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.86);
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.3rem;
+      color: #8d4158;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-flower {
+      position: absolute;
+      font-size: 34px;
+      opacity: 0.85;
+    }
+
+    .f1 { top: 22px; right: 28px; }
+    .f2 { bottom: 90px; left: 26px; }
+    .f3 { bottom: 18px; right: 80px; }
+
+    .hero-visual {
+      background: linear-gradient(160deg, #fff8db, #fff 38%, #ffe4f0);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .mini-search,
+    .feature-card,
+    .weather-card {
+      background: rgba(255,255,255,0.88);
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid rgba(255, 184, 77, 0.2);
+    }
+
+    .mini-search h3,
+    .feature-card h3,
+    .weather-card h3,
+    .section-header h2,
+    .contact-box h2,
+    .explorer-card h2,
+    .tour-content h3 {
+      color: #8d4158;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mini-search input,
+    .mini-search select,
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(242, 140, 56, 0.18);
+      background: #fffdfb;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .feature-list li {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, rgba(255,242,184,0.55), rgba(255,214,229,0.4));
+      font-weight: 700;
+      color: #6b5752;
+    }
+
+    .content-stack {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-card {
+      background: rgba(255,255,255,0.72);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(242, 140, 56, 0.14);
+      backdrop-filter: blur(12px);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .section-header p { color: var(--muted); max-width: 58ch; }
+
+    .tour-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .tour-card {
+      background: var(--surface-strong);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 184, 77, 0.18);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .tour-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 35px rgba(232, 138, 87, 0.14);
+    }
+
+    .tour-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .tour-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.9);
+      color: #9c4f20;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .tour-content { padding: 18px; }
+
+    .tour-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .tour-meta span {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: #fff7e7;
+      color: #8d5d2d;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .tour-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      gap: 10px;
+    }
+
+    .price {
+      color: #8d4158;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .tiny-btn {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .why-grid,
+    .testimonial-grid,
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card,
+    .testimonial,
+    .benefit-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      border: 1px solid rgba(255, 184, 77, 0.16);
+    }
+
+    .info-card h3,
+    .benefit-card h3 {
+      margin-bottom: 10px;
+      color: #8d4158;
+    }
+
+    .testimonial p:first-child {
+      margin-bottom: 12px;
+      color: #68544e;
+    }
+
+    .testimonial strong {
+      color: #d15a83;
+    }
+
+    .explorer-layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 22px;
+    }
+
+    .explorer-card,
+    .results-card {
+      background: white;
+      border-radius: 24px;
+      padding: 22px;
+      border: 1px solid rgba(255, 184, 77, 0.18);
+    }
+
+    .explorer-card p,
+    .results-card p { color: var(--muted); }
+
+    .explorer-form {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .explorer-form label {
+      font-weight: 700;
+      color: #7a6058;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .explorer-form select,
+    .explorer-form input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(242, 140, 56, 0.18);
+      background: #fffdfb;
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .destination-count {
+      font-weight: 700;
+      color: #a56124;
+      background: #fff4cd;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .country-card {
+      border-radius: 20px;
+      padding: 18px;
+      background: linear-gradient(145deg, #fffef9, #fff7ec);
+      border: 1px solid rgba(255, 184, 77, 0.18);
+      display: grid;
+      gap: 10px;
+    }
+
+    .country-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .flag {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .country-card h3 {
+      color: #8d4158;
+      font-size: 1.1rem;
+    }
+
+    .country-card small {
+      color: var(--muted);
+      display: block;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chips span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #ffe9ef;
+      color: #a24c68;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .country-card button {
+      width: fit-content;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+    }
+
+    .contact-box,
+    .contact-form {
+      background: white;
+      border-radius: 24px;
+      padding: 22px;
+      border: 1px solid rgba(255,184,77,0.18);
+    }
+
+    .contact-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .contact-points div {
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #fff4cb, #ffe4f0);
+      font-weight: 700;
+      color: #6d5751;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer {
+      max-width: var(--max-width);
+      margin: 24px auto 0;
+      padding: 22px 8px 8px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-top {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(242, 140, 56, 0.16);
+      padding: 14px 16px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1180px) {
+      .tour-grid,
+      .why-grid,
+      .benefit-grid,
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+      .country-grid { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 1fr; }
+      .explorer-layout,
+      .contact-layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .mobile-top { display: flex; }
+      .page-shell { grid-template-columns: 1fr; }
+      .sidebar {
+        position: fixed;
+        inset: 72px auto 0 0;
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        z-index: 20;
+        height: calc(100vh - 72px);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { padding: 18px; }
+      .topbar { margin-top: 0; }
+    }
+
+    @media (max-width: 720px) {
+      .hero-panel { padding: 30px 22px; min-height: auto; }
+      .hero-stats,
+      .tour-grid,
+      .why-grid,
+      .benefit-grid,
+      .testimonial-grid { grid-template-columns: 1fr; }
+      .topbar,
+      .section-card { padding: 22px 18px; }
+      .section-header {
+        flex-direction: column;
+        align-items: start;
+      }
+      .search-row { grid-template-columns: 1fr; }
+      .hero-panel h2 { max-width: 13ch; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-top">
+    <div class="brand">
+      <div class="brand-icon">✿</div>
+      <div>
+        <h1>EuroBloom Tours</h1>
+      </div>
+    </div>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+  </div>
+
+  <div class="page-shell">
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-icon">✿</div>
+          <div>
+            <h1>EuroBloom Tours</h1>
+            <p>Travel concept by Ceylin</p>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#home" class="active">Home</a>
+          <a href="#featured-tours">Featured Tours</a>
+          <a href="#explorer">Destination Finder</a>
+          <a href="#why-us">Why Us</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>Need a custom trip?</h3>
+        <p>Tell us your vibe and preferred season, and we will guide you toward the right destination.</p>
+        <a class="mini-btn" href="#explorer">Try the finder</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div>
+          <strong>Travel-inspired front-end demo</strong>
+          <p>Built to show layout design, user interface organization, interactive filtering, and clear contact flow.</p>
+        </div>
+        <div class="topbar-actions">
+          <a href="#contact" class="ghost-btn">Contact team</a>
+          <a href="#explorer" class="primary-btn">Find your place</a>
+        </div>
+      </div>
+
+      <section class="hero" id="home">
+        <div class="hero-panel">
+          <span class="eyebrow">Explore Europe with a warmer, smarter travel experience</span>
+          <h2>Find where you should go next.</h2>
+          <p>
+            EuroBloom Tours is a travel landing page concept inspired by tourism websites, but organized with a cleaner structure, interactive destination discovery, and a hand-crafted interface. Start with Europe and browse countries by vibe, budget, season, and travel style.
+          </p>
+          <div class="hero-actions">
+            <a href="#explorer" class="primary-btn">Find destinations</a>
+            <a href="#featured-tours" class="ghost-btn">See featured tours</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-card"><strong>35+</strong><span>European countries</span></div>
+            <div class="stat-card"><strong>4</strong><span>Travel styles</span></div>
+            <div class="stat-card"><strong>100%</strong><span>Responsive layout</span></div>
+          </div>
+          <div class="hero-flower f1">🌼</div>
+          <div class="hero-flower f2">🌸</div>
+          <div class="hero-flower f3">🌷</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="mini-search">
+            <h3>Quick destination lookup</h3>
+            <p>Type a country name to jump directly to it.</p>
+            <div class="search-row">
+              <input id="quickCountryInput" type="text" placeholder="Example: Italy, Spain, Norway" />
+              <button class="primary-btn" id="quickSearchBtn">Search</button>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h3>Why this concept fits a tourism internship</h3>
+            <ul class="feature-list">
+              <li>Structured travel landing page sections</li>
+              <li>Interactive explorer for user engagement</li>
+              <li>Clear contact and call-to-action areas</li>
+              <li>Organized code ready to expand</li>
+            </ul>
+          </div>
+
+          <div class="weather-card">
+            <h3>Sample booking highlights</h3>
+            <p>Sunny cities, cultural routes, nature escapes, and weekend breaks — all presented in a format that can later connect to back-end data or CMS content.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-stack">
+        <section class="section-card" id="featured-tours">
+          <div class="section-header">
+            <div>
+              <h2>Featured tours</h2>
+              <p>These sample cards show how a tourism website can present travel offers in a more polished and conversion-friendly way.</p>
+            </div>
+            <a href="#contact" class="ghost-btn">Request itinerary</a>
+          </div>
+
+          <div class="tour-grid">
+            <article class="tour-card">
+              <div class="tour-image" style="background-image: linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.15)), url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=80');">
+                <span class="tour-badge">Best seller</span>
+              </div>
+              <div class="tour-content">
+                <h3>Barcelona City & Coast Escape</h3>
+                <p>Architecture, food, seaside walks, and a vibrant city rhythm for travelers who want variety in one trip.</p>
+                <div class="tour-meta">
+                  <span>4 days</span>
+                  <span>Culture</span>
+                  <span>Summer</span>
+                </div>
+                <div class="tour-footer">
+                  <span class="price">€420</span>
+                  <button class="tiny-btn">Book now</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="tour-card">
+              <div class="tour-image" style="background-image: linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.15)), url('https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80');">
+                <span class="tour-badge">Weekend</span>
+              </div>
+              <div class="tour-content">
+                <h3>Prague Fairytale Weekend</h3>
+                <p>Cobblestone streets, old-town charm, and romantic evening views in a compact city break package.</p>
+                <div class="tour-meta">
+                  <span>3 days</span>
+                  <span>City break</span>
+                  <span>Budget</span>
+                </div>
+                <div class="tour-footer">
+                  <span class="price">€290</span>
+                  <button class="tiny-btn">Book now</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="tour-card">
+              <div class="tour-image" style="background-image: linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.15)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=80');">
+                <span class="tour-badge">Nature lover</span>
+              </div>
+              <div class="tour-content">
+                <h3>Norway Fjord Discovery</h3>
+                <p>Dramatic landscapes, scenic train rides, and fresh Nordic air for travelers seeking calm and nature.</p>
+                <div class="tour-meta">
+                  <span>6 days</span>
+                  <span>Nature</span>
+                  <span>Premium</span>
+                </div>
+                <div class="tour-footer">
+                  <span class="price">€860</span>
+                  <button class="tiny-btn">Book now</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card" id="explorer">
+          <div class="section-header">
+            <div>
+              <h2>Where do you want to go? Let’s find it.</h2>
+              <p>This feature starts with Europe only. Visitors can browse destinations by budget, travel style, season, and keyword to discover countries that match their mood.</p>
+            </div>
+            <span class="destination-count" id="resultCount">Showing 35 destinations</span>
+          </div>
+
+          <div class="explorer-layout">
+            <div class="explorer-card">
+              <h2>Destination finder</h2>
+              <p>Use the filters below to discover places in Europe that fit your trip idea.</p>
+
+              <div class="explorer-form">
+                <div>
+                  <label for="searchInput">Country or keyword</label>
+                  <input id="searchInput" type="text" placeholder="Search by country, city vibe, or activity" />
+                </div>
+                <div>
+                  <label for="budgetFilter">Budget</label>
+                  <select id="budgetFilter">
+                    <option value="all">All budgets</option>
+                    <option value="budget">Budget-friendly</option>
+                    <option value="mid">Mid-range</option>
+                    <option value="premium">Premium</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="styleFilter">Travel style</label>
+                  <select id="styleFilter">
+                    <option value="all">All styles</option>
+                    <option value="city">City break</option>
+                    <option value="culture">Culture</option>
+                    <option value="nature">Nature</option>
+                    <option value="beach">Beach</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="seasonFilter">Best season</label>
+                  <select id="seasonFilter">
+                    <option value="all">All seasons</option>
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="autumn">Autumn</option>
+                    <option value="winter">Winter</option>
+                  </select>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+                  <button class="primary-btn" id="applyFiltersBtn">Apply filters</button>
+                  <button class="ghost-btn" id="resetFiltersBtn">Reset</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="results-card">
+              <div class="result-header">
+                <div>
+                  <h2>European destination results</h2>
+                  <p>All cards below are rendered from a JavaScript data array, so the structure is easy to expand later.</p>
+                </div>
+              </div>
+              <div class="country-grid" id="countryGrid"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" id="why-us">
+          <div class="section-header">
+            <div>
+              <h2>Why this travel concept works</h2>
+              <p>It presents multiple website elements that tourism companies often need: featured offers, discoverability tools, trust sections, and direct contact actions.</p>
+            </div>
+          </div>
+
+          <div class="why-grid">
+            <article class="info-card">
+              <h3>Organized interface</h3>
+              <p>A sidebar menu, a clear visual hierarchy, and consistent cards make it easier for users to navigate and compare options.</p>
+            </article>
+            <article class="info-card">
+              <h3>Interactive user journey</h3>
+              <p>The destination finder gives visitors a reason to interact with the page instead of only scrolling through static content.</p>
+            </article>
+            <article class="info-card">
+              <h3>Ready for expansion</h3>
+              <p>This layout can later be connected to WordPress content, booking forms, APIs, or a destination database.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-header">
+            <div>
+              <h2>More benefits for travelers</h2>
+              <p>Extra cards like these help communicate value clearly while keeping the design polished and conversion oriented.</p>
+            </div>
+          </div>
+          <div class="benefit-grid">
+            <article class="benefit-card">
+              <h3>Local-inspired itineraries</h3>
+              <p>Routes designed around real experiences: cafés, city walks, scenic spots, museums, and regional food stops.</p>
+            </article>
+            <article class="benefit-card">
+              <h3>Flexible planning</h3>
+              <p>Visitors can browse ideas first, then request a custom plan through the contact section.</p>
+            </article>
+            <article class="benefit-card">
+              <h3>Hand-crafted design</h3>
+              <p>The page looks personal and intentionally built, not like a generic template copied from a builder.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card" id="reviews">
+          <div class="section-header">
+            <div>
+              <h2>Traveler reviews</h2>
+              <p>Social proof sections like these help tourism websites feel more trustworthy and complete.</p>
+            </div>
+          </div>
+
+          <div class="testimonial-grid">
+            <article class="testimonial">
+              <p>“The destination finder made it easy to decide where to go for our summer trip. It felt much more personal than a typical travel site.”</p>
+              <strong>— Elif, İstanbul</strong>
+            </article>
+            <article class="testimonial">
+              <p>“I loved the layout. The offers were clear, the design was warm, and the page felt both beautiful and practical.”</p>
+              <strong>— Laura, Madrid</strong>
+            </article>
+            <article class="testimonial">
+              <p>“A very organized concept. The side menu, contact section, and country cards make the site easy to use.”</p>
+              <strong>— Martin, Berlin</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card" id="contact">
+          <div class="section-header">
+            <div>
+              <h2>Contact us</h2>
+              <p>A strong contact area is important for inquiries, itinerary requests, or lead capture.</p>
+            </div>
+          </div>
+
+          <div class="contact-layout">
+            <div class="contact-box">
+              <h2>Let’s plan your European trip</h2>
+              <p>Tell us what kind of experience you want and we will help you shape a travel idea.</p>
+              <div class="contact-points">
+                <div>Email: hello@eurobloomtours.com</div>
+                <div>Phone: +34 600 123 456</div>
+                <div>Focus: City breaks, culture, nature, and beach escapes</div>
+              </div>
+            </div>
+
+            <form class="contact-form">
+              <input type="text" placeholder="Your name" />
+              <input type="email" placeholder="Your email" />
+              <input type="text" placeholder="Preferred destination or style" />
+              <textarea rows="5" placeholder="Tell us about your ideal trip"></textarea>
+              <button type="button" class="primary-btn">Send inquiry</button>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <span>© 2026 EuroBloom Tours — Front-end concept by Ceylin Sena Soyer</span>
+        <span>Built with HTML, CSS, and JavaScript</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const destinations = [
+      { country: 'Spain', flag: '🇪🇸', budget: 'mid', style: 'beach', season: 'summer', city: 'Barcelona, Málaga, Granada', vibe: 'sunny beaches, tapas, architecture, nightlife' },
+      { country: 'Portugal', flag: '🇵🇹', budget: 'mid', style: 'beach', season: 'summer', city: 'Lisbon, Porto, Faro', vibe: 'coastline, pastel streets, ocean views' },
+      { country: 'Italy', flag: '🇮🇹', budget: 'mid', style: 'culture', season: 'spring', city: 'Rome, Florence, Venice', vibe: 'history, food, art, romantic streets' },
+      { country: 'France', flag: '🇫🇷', budget: 'premium', style: 'culture', season: 'spring', city: 'Paris, Nice, Lyon', vibe: 'museums, cafés, elegance, coast' },
+      { country: 'Germany', flag: '🇩🇪', budget: 'mid', style: 'city', season: 'autumn', city: 'Berlin, Munich, Hamburg', vibe: 'urban culture, design, history' },
+      { country: 'Netherlands', flag: '🇳🇱', budget: 'premium', style: 'city', season: 'spring', city: 'Amsterdam, Rotterdam, Utrecht', vibe: 'canals, cycling, modern design' },
+      { country: 'Belgium', flag: '🇧🇪', budget: 'mid', style: 'culture', season: 'winter', city: 'Brussels, Bruges, Ghent', vibe: 'chocolate, squares, fairytale towns' },
+      { country: 'Switzerland', flag: '🇨🇭', budget: 'premium', style: 'nature', season: 'winter', city: 'Zurich, Lucerne, Interlaken', vibe: 'mountains, lakes, alpine views' },
+      { country: 'Austria', flag: '🇦🇹', budget: 'premium', style: 'culture', season: 'winter', city: 'Vienna, Salzburg, Innsbruck', vibe: 'classical music, palaces, snowy charm' },
+      { country: 'Czech Republic', flag: '🇨🇿', budget: 'budget', style: 'city', season: 'autumn', city: 'Prague, Brno', vibe: 'old town, affordable city breaks' },
+      { country: 'Hungary', flag: '🇭🇺', budget: 'budget', style: 'city', season: 'autumn', city: 'Budapest', vibe: 'thermal baths, river views, nightlife' },
+      { country: 'Poland', flag: '🇵🇱', budget: 'budget', style: 'city', season: 'autumn', city: 'Kraków, Warsaw, Gdańsk', vibe: 'historic centers, value trips' },
+      { country: 'Greece', flag: '🇬🇷', budget: 'mid', style: 'beach', season: 'summer', city: 'Athens, Santorini, Crete', vibe: 'islands, sea, white villages' },
+      { country: 'Croatia', flag: '🇭🇷', budget: 'mid', style: 'beach', season: 'summer', city: 'Dubrovnik, Split, Hvar', vibe: 'clear water, coastal escapes' },
+      { country: 'Slovenia', flag: '🇸🇮', budget: 'mid', style: 'nature', season: 'spring', city: 'Ljubljana, Bled', vibe: 'lakes, green scenery, relaxed pace' },
+      { country: 'Slovakia', flag: '🇸🇰', budget: 'budget', style: 'nature', season: 'winter', city: 'Bratislava, High Tatras', vibe: 'mountain air, hidden gem feel' },
+      { country: 'Romania', flag: '🇷🇴', budget: 'budget', style: 'culture', season: 'autumn', city: 'Bucharest, Brașov, Cluj', vibe: 'castles, forests, value travel' },
+      { country: 'Bulgaria', flag: '🇧🇬', budget: 'budget', style: 'beach', season: 'summer', city: 'Sofia, Varna, Plovdiv', vibe: 'budget coast, old towns' },
+      { country: 'Serbia', flag: '🇷🇸', budget: 'budget', style: 'city', season: 'spring', city: 'Belgrade, Novi Sad', vibe: 'lively streets, nightlife, food' },
+      { country: 'Bosnia and Herzegovina', flag: '🇧🇦', budget: 'budget', style: 'culture', season: 'spring', city: 'Sarajevo, Mostar', vibe: 'bridges, history, layered culture' },
+      { country: 'Montenegro', flag: '🇲🇪', budget: 'mid', style: 'beach', season: 'summer', city: 'Kotor, Budva', vibe: 'dramatic bay views, Adriatic coast' },
+      { country: 'Albania', flag: '🇦🇱', budget: 'budget', style: 'beach', season: 'summer', city: 'Tirana, Sarandë', vibe: 'hidden beaches, affordable coast' },
+      { country: 'North Macedonia', flag: '🇲🇰', budget: 'budget', style: 'culture', season: 'spring', city: 'Skopje, Ohrid', vibe: 'lake views, relaxed city trips' },
+      { country: 'Denmark', flag: '🇩🇰', budget: 'premium', style: 'city', season: 'summer', city: 'Copenhagen, Aarhus', vibe: 'design, waterfront, slow living' },
+      { country: 'Sweden', flag: '🇸🇪', budget: 'premium', style: 'nature', season: 'summer', city: 'Stockholm, Gothenburg', vibe: 'islands, forests, clean design' },
+      { country: 'Norway', flag: '🇳🇴', budget: 'premium', style: 'nature', season: 'summer', city: 'Oslo, Bergen, Tromsø', vibe: 'fjords, hikes, epic landscapes' },
+      { country: 'Finland', flag: '🇫🇮', budget: 'premium', style: 'nature', season: 'winter', city: 'Helsinki, Rovaniemi', vibe: 'northern lights, snow, calm' },
+      { country: 'Iceland', flag: '🇮🇸', budget: 'premium', style: 'nature', season: 'winter', city: 'Reykjavík', vibe: 'geysers, waterfalls, volcanic scenery' },
+      { country: 'Ireland', flag: '🇮🇪', budget: 'mid', style: 'nature', season: 'spring', city: 'Dublin, Galway', vibe: 'green landscapes, pubs, cliffs' },
+      { country: 'United Kingdom', flag: '🇬🇧', budget: 'premium', style: 'city', season: 'spring', city: 'London, Edinburgh, Manchester', vibe: 'museums, iconic city life, theater' },
+      { country: 'Estonia', flag: '🇪🇪', budget: 'mid', style: 'city', season: 'winter', city: 'Tallinn', vibe: 'digital city, old town, winter charm' },
+      { country: 'Latvia', flag: '🇱🇻', budget: 'mid', style: 'city', season: 'winter', city: 'Riga', vibe: 'art nouveau, cozy winter escapes' },
+      { country: 'Lithuania', flag: '🇱🇹', budget: 'mid', style: 'city', season: 'autumn', city: 'Vilnius, Kaunas', vibe: 'compact cities, culture, calm pace' },
+      { country: 'Luxembourg', flag: '🇱🇺', budget: 'premium', style: 'city', season: 'spring', city: 'Luxembourg City', vibe: 'small luxury, clean cityscapes' },
+      { country: 'Malta', flag: '🇲🇹', budget: 'mid', style: 'beach', season: 'summer', city: 'Valletta, Sliema', vibe: 'island sun, history, turquoise water' }
+    ];
+
+    const countryGrid = document.getElementById('countryGrid');
+    const resultCount = document.getElementById('resultCount');
+    const searchInput = document.getElementById('searchInput');
+    const budgetFilter = document.getElementById('budgetFilter');
+    const styleFilter = document.getElementById('styleFilter');
+    const seasonFilter = document.getElementById('seasonFilter');
+    const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const quickCountryInput = document.getElementById('quickCountryInput');
+    const quickSearchBtn = document.getElementById('quickSearchBtn');
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+
+    function renderCountries(list) {
+      if (!list.length) {
+        countryGrid.innerHTML = `
+          <div class="country-card" style="grid-column: 1 / -1;">
+            <h3>No destination found</h3>
+            <small>Try another keyword or reset the filters.</small>
+          </div>
+        `;
+        resultCount.textContent = 'Showing 0 destinations';
+        return;
+      }
+
+      resultCount.textContent = `Showing ${list.length} destination${list.length > 1 ? 's' : ''}`;
+
+      countryGrid.innerHTML = list.map(item => `
+        <article class="country-card">
+          <div class="country-top">
+            <div>
+              <h3>${item.country}</h3>
+              <small>${item.city}</small>
+            </div>
+            <span class="flag">${item.flag}</span>
+          </div>
+          <p>${item.vibe}</p>
+          <div class="chips">
+            <span>${capitalize(item.budget)}</span>
+            <span>${capitalize(item.style)}</span>
+            <span>${capitalize(item.season)}</span>
+          </div>
+          <button class="tiny-btn" type="button" onclick="fillContact('${item.country.replace(/'/g, "\\'")}')">Ask about ${item.country}</button>
+        </article>
+      `).join('');
+    }
+
+    function capitalize(value) {
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+
+    function applyFilters() {
+      const keyword = searchInput.value.trim().toLowerCase();
+      const budget = budgetFilter.value;
+      const style = styleFilter.value;
+      const season = seasonFilter.value;
+
+      const filtered = destinations.filter(item => {
+        const matchesKeyword = !keyword ||
+          item.country.toLowerCase().includes(keyword) ||
+          item.city.toLowerCase().includes(keyword) ||
+          item.vibe.toLowerCase().includes(keyword) ||
+          item.style.toLowerCase().includes(keyword);
+
+        const matchesBudget = budget === 'all' || item.budget === budget;
+        const matchesStyle = style === 'all' || item.style === style;
+        const matchesSeason = season === 'all' || item.season === season;
+
+        return matchesKeyword && matchesBudget && matchesStyle && matchesSeason;
+      });
+
+      renderCountries(filtered);
+    }
+
+    function resetFilters() {
+      searchInput.value = '';
+      budgetFilter.value = 'all';
+      styleFilter.value = 'all';
+      seasonFilter.value = 'all';
+      renderCountries(destinations);
+    }
+
+    function quickSearch() {
+      const value = quickCountryInput.value.trim().toLowerCase();
+      if (!value) {
+        renderCountries(destinations);
+        return;
+      }
+      searchInput.value = value;
+      applyFilters();
+      document.getElementById('explorer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function fillContact(country) {
+      const preferred = document.querySelector('.contact-form input[placeholder="Preferred destination or style"]');
+      if (preferred) preferred.value = country;
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.fillContact = fillContact;
+
+    applyFiltersBtn.addEventListener('click', applyFilters);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    quickSearchBtn.addEventListener('click', quickSearch);
+    searchInput.addEventListener('input', applyFilters);
+    budgetFilter.addEventListener('change', applyFilters);
+    styleFilter.addEventListener('change', applyFilters);
+    seasonFilter.addEventListener('change', applyFilters);
+    quickCountryInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') quickSearch();
+    });
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        if (window.innerWidth <= 900) sidebar.classList.remove('open');
+      });
+    });
+
+    renderCountries(destinations);
+  </script>
+</body>
+</html>
